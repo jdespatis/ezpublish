@@ -99,10 +99,13 @@ class eZMysqlSchema extends eZDBSchemaInterface
                 else
                     $field['default'] = (string)$row['Default'];
             }
-            else
+            elseif ( $row['Default'] !== null )
             {
                 $field['default'] = (string)$row['Default'];
             }
+
+            if ($field['default'] !== false)
+            {
 
             $numericTypes = array( 'float', 'int' );
             $blobTypes = array( 'tinytext', 'text', 'mediumtext', 'longtext' );
@@ -148,6 +151,8 @@ class eZMysqlSchema extends eZDBSchemaInterface
             {
                 // We do not want default for blobs.
                 $field['default'] = false;
+            }
+
             }
 
             if ( strpos ( $row['Extra'], 'auto_increment' ) !== false )
